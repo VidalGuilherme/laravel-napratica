@@ -25,12 +25,17 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin -
 
 RUN docker-php-ext-install zip iconv simplexml pcntl gd fileinfo
 
+# Node.js, NPM, Yarn
+RUN curl -sL https://deb.nodesource.com/setup_20.x | bash -
+RUN apt-get install -y nodejs
+RUN npm install npm@latest -g
+RUN npm install yarn -g
+
 ### Permissões
 WORKDIR /application
 COPY ./src .
 RUN cd /application
 
-RUN chown -R www-data: *
 RUN chmod 755 -R storage
 RUN chmod 755 -R bootstrap/cache
 
