@@ -17,8 +17,17 @@ Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
-])->group(function () {
+])
+->name('admin.')
+->prefix('admin')
+->namespace('App\Http\Controllers')
+->group(function () {
+    
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
+
+    Route::resource('fornecedores', 'SupplierController');
+    Route::get('fornecedores/{id}/delete', 'SupplierController@delete')->name('fornecedores.delete');
+
 });
