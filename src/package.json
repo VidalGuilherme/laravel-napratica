@@ -19,6 +19,8 @@
         "vue": "^3.3.13"
     },
     "dependencies": {
+        "datatables.net-dt": "^2.0.5",
+        "datatables.net-vue3": "^3.0.1",
         "maska": "^2.1.11"
     }
 }
