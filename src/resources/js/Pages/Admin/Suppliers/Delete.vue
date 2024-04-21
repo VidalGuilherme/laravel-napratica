@@ -3,6 +3,7 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import Form from './Partials/Form.vue';
 import ButtonLink from '@/Components/ButtonLink.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
+import { ref } from 'vue';
 
 const props = defineProps({
     item: {
@@ -19,7 +20,10 @@ const props = defineProps({
     },
 });
 
+const formSub = ref(null);
+
 const submitForm = (form) => {
+    formSub.value = form;
     form.delete(route('admin.suppliers.destroy', props.item), {
         errorBag: '',
         preserveScroll: true,
@@ -55,7 +59,7 @@ const submitForm = (form) => {
 
                 <Form @submitted="submitForm" :item="item" :stateIndicators="stateIndicators" :retreats="retreats" :supplierTypes="supplierTypes" :isDisabled="true">
                     <template #actions>
-                        <PrimaryButton>
+                        <PrimaryButton :disabled="formSub && formSub?.processing"  :class="{ 'opacity-10': formSub && formSub?.processing }">
                             Excluir
                         </PrimaryButton>
                     </template>

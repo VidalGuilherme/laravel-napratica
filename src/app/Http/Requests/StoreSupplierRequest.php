@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Enums\Retreats;
 use App\Enums\StateIndicators;
+use App\Enums\SupplierTypes;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -23,9 +24,12 @@ class StoreSupplierRequest extends FormRequest
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
-    {                
+    {
         return [
-            'supplier_type' => ['required'],
+            'supplier_type' => [
+                'required',
+                Rule::in(array_column(SupplierTypes::cases(),'value'))
+            ],
             'cpf' => ['required_if:supplier_type,pf', 'size:11', 'nullable'],
             'personal_name' => ['required_with:cpf','min:3','max:255', 'nullable'],
             'nickname' => ['min:3', 'max:255', 'nullable'],

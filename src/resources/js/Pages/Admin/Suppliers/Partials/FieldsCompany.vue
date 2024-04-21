@@ -4,6 +4,7 @@ import InputLabel from '@/Components/InputLabel.vue';
 import TextInput from '@/Components/TextInput.vue';
 import MaskInput from '@/Components/MaskInput.vue';
 import SelectInput from '@/Components/SelectInput.vue';
+import { computed } from 'vue';
 
 const props = defineProps({
     item: {
@@ -33,6 +34,12 @@ const props = defineProps({
     show: {
         default: true,
     },
+});
+
+defineEmits(['changeStateIndicator']);
+
+const checkStateIndicator = computed(() => {
+    return props.item.state_indicator == '' || props.item.state_indicator == 'nao_contribuinte';
 });
 
 </script>
@@ -82,13 +89,14 @@ const props = defineProps({
 
     <div v-show="show" class="col-span-12 lg:col-span-3">
         <InputLabel for="state_indicator">
-            Indicador de Inscrição Estadual<span class="text-red-600">*</span>
+            Indicador de Inscrição Estadual <span class="text-red-600">*</span>
         </InputLabel>
         <SelectInput :required="show"
             id="state_indicator"
             v-model="item.state_indicator"                    
             class="block w-full mt-1"
             :isDisabled="isDisabled"
+            @change="$emit('changeStateIndicator', item.state_indicator)"
         >
             <option value="">Selecione</option>            
             <option v-for="(indicator, index) in stateIndicators" :key="index" :value="index">{{ indicator }}</option>        
@@ -98,13 +106,13 @@ const props = defineProps({
 
     <div v-show="show" class="col-span-12 lg:col-span-3">
         <InputLabel for="state_registration">
-            Inscrição Estadual <span class="text-red-600">*</span>
+            Inscrição Estadual <span v-show="!checkStateIndicator" class="text-red-600">*</span>
         </InputLabel>
         <TextInput :required="show"
             id="state_registration"
             v-model="item.state_registration"            
             class="block w-full mt-1"
-            :isDisabled="isDisabled"
+            :isDisabled="isDisabled || checkStateIndicator"
         />
         <InputError :message="errors?.state_registration" class="mt-2" />
     </div>
@@ -137,7 +145,7 @@ const props = defineProps({
             
     <div v-show="show" class="col-span-12 lg:col-span-3">
         <InputLabel for="retreat">
-            Recolhimento<span class="text-red-600">*</span>
+            Recolhimento <span class="text-red-600">*</span>
         </InputLabel>
         <SelectInput :required="show"
             id="retreat"

@@ -115,7 +115,7 @@ class SupplierController extends Controller
 
         $supplier = $this->service->update($request->validated(), $supplier);
 
-        return redirect(route('admin.suppliers.show', $supplier->id));
+        return redirect(route('admin.suppliers.show', $supplier->id))->with('success', 'Fornecedor atualizado com Sucesso!');
     }
 
     /**
@@ -145,7 +145,7 @@ class SupplierController extends Controller
         $this->authorize('delete', $supplier);
         $this->service->destroy($supplier);
 
-        return redirect(route('admin.suppliers.index'));
+        return redirect(route('admin.suppliers.index'))->with('success', 'Fornecedor removido com Sucesso!');;
     }
 
     /**

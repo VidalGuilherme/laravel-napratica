@@ -288,7 +288,7 @@ const logout = () => {
 
             <!-- Page Content -->
             <main>
-                <div class="px-4 py-8 md:flex-1 md:p-12 md:overflow-y-auto" scroll-region>
+                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 pt-4 pb-0 md:overflow-y-auto grid justify-items-end" scroll-region>
                     <FlashMessages></FlashMessages>
                 </div>
 
