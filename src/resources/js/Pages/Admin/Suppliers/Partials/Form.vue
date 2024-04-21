@@ -25,7 +25,7 @@ const props = defineProps({
             municipal_registration: '',            
             cnpj_status: '',            
             retreat: '',
-            status: '',
+            active: '',
         }
     },    
     supplierTypes: {
@@ -44,17 +44,17 @@ const props = defineProps({
 
 defineEmits(['submitted']);
 
-const supplierType = ref("pj");
+const supplierType = ref(props.item.supplier_type);
 
 const form = useForm({
     supplier: props.item,
 });
 
 watch(supplierType, (newType, oldType) => {    
-    resetForm(newType);
-})
+    if(!props.isDisabled) resetForm(newType);
+});
 
-const resetForm = (type) => {
+const resetForm = (type) => {    
     form.supplier = {
         supplier_type: type,
         cpf: '',
@@ -69,7 +69,7 @@ const resetForm = (type) => {
         municipal_registration: '',            
         cnpj_status: '',            
         retreat: '',
-        status: '',
+        active: '',
     };
 };
 
@@ -96,8 +96,10 @@ const resetForm = (type) => {
                                     :id="'supplier_'+index" 
                                     name="supplier_type"
                                     v-model="supplierType" 
-                                    :value="index"                                                                                
+                                    :value="index"      
+                                    :disabled="isDisabled"                                                                          
                                     class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500"
+                                    :class="isDisabled ? 'disabled:opacity-75 dark:bg-gray-500 bg-gray-200' : ''"
                                 >                        
                                 <label :for="'supplier_'+index" class="cursor-pointer ms-2 text-sm text-gray-600">{{ supType }}</label>
                             </div>
@@ -108,12 +110,12 @@ const resetForm = (type) => {
                     <FieldsCompany :show="supplierType == 'pj'" :item="form.supplier" :stateIndicators="stateIndicators" :retreats="retreats" :errors="form.errors" :isDisabled="isDisabled"></FieldsCompany>
 
                     <div class="col-span-12 lg:col-span-3">
-                        <InputLabel for="status">
+                        <InputLabel for="active">
                             Ativo <span class="text-red-600">*</span>
                         </InputLabel>
                         <SelectInput required
-                            id="status"
-                            v-model="form.supplier.status"                    
+                            id="active"
+                            v-model="form.supplier.active"                    
                             class="block w-full mt-1"
                             :isDisabled="isDisabled"
                         >
@@ -121,7 +123,7 @@ const resetForm = (type) => {
                             <option value="0">Não</option>
                             <option value="1">Sim</option>
                         </SelectInput>
-                        <InputError :message="form.errors?.status" class="mt-2" />
+                        <InputError :message="form.errors?.active" class="mt-2" />
                     </div>
                 </div>
             </Accordeon>            
@@ -129,7 +131,7 @@ const resetForm = (type) => {
         </template>
 
         <template #actions>            
-            <slot name="actions" :class="{ 'opacity-25': form.processing }" :disabled="form.processing"></slot>
+            <slot name="actions" :class="{ 'opacity-10': form.processing }" :disabled="form.processing"></slot>
         </template>
     </FormSection>
 </template>

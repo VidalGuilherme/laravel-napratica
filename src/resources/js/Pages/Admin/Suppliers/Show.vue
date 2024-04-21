@@ -32,21 +32,21 @@ const props = defineProps({
             <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
 
                 <div class="mb-10 text-right">
-                    <ButtonLink :href="route('admin.fornecedores.delete', item.id)">
+                    <ButtonLink :href="route('admin.suppliers.delete', item.id)">
                         Excluir
                     </ButtonLink>
-                    <ButtonLink :href="route('admin.fornecedores.edit', item.id)">
+                    <ButtonLink :href="route('admin.suppliers.edit', item.id)">
                         Editar
                     </ButtonLink>
-                    <ButtonLink :href="route('admin.fornecedores.create')">
+                    <ButtonLink :href="route('admin.suppliers.create')">
                         Cadastrar
                     </ButtonLink>
-                    <ButtonLink :href="route('admin.fornecedores.index')">
+                    <ButtonLink :href="route('admin.suppliers.index')">
                         Listar
                     </ButtonLink>
                 </div>
 
-                <Form :stateIndicators="stateIndicators" :retreats="retreats" :supplierTypes="supplierTypes" :isDisabled="true">
+                <Form :item="item" :stateIndicators="stateIndicators" :retreats="retreats" :supplierTypes="supplierTypes" :isDisabled="true">
                     <template #actions>
                         
                     </template>

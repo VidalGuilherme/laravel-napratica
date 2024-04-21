@@ -33,7 +33,7 @@ class SupplierService
     {
         $item = DB::transaction(function () use ($validated, $item) {            
 
-            $item->update(Arr::except($validated, []));
+            $item->update($validated);
 
             return $item;
         });

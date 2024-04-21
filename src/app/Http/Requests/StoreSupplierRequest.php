@@ -46,7 +46,7 @@ class StoreSupplierRequest extends FormRequest
                 Rule::in(array_column(Retreats::cases(),'value')),
                 'nullable'
             ],
-            'status' => ['required'],
+            'active' => ['required'],
         ];
     }
 

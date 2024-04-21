@@ -24,7 +24,7 @@ const submitForm = (form) => {
         ...data.supplier,
         cpf: data.supplier.cpf.replace(/[^0-9]/g, ''),
         cnpj: data.supplier.cnpj.replace(/[^0-9]/g, ''),
-    })).put(route('admin.fornecedores.update', props.item), {
+    })).put(route('admin.suppliers.update', props.item), {
         errorBag: '',
         preserveScroll: true,
     });
@@ -43,21 +43,21 @@ const submitForm = (form) => {
             <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
 
                 <div class="mb-10 text-right">
-                    <ButtonLink :href="route('admin.fornecedores.delete', item.id)">
+                    <ButtonLink :href="route('admin.suppliers.delete', item.id)">
                         Excluir
                     </ButtonLink>
-                    <ButtonLink :href="route('admin.fornecedores.show', item.id)">
+                    <ButtonLink :href="route('admin.suppliers.show', item.id)">
                         Visualizar
                     </ButtonLink>
-                    <ButtonLink :href="route('admin.fornecedores.create')">
+                    <ButtonLink :href="route('admin.suppliers.create')">
                         Cadastrar
                     </ButtonLink>
-                    <ButtonLink :href="route('admin.fornecedores.index')">
+                    <ButtonLink :href="route('admin.suppliers.index')">
                         Listar
                     </ButtonLink>
                 </div>
 
-                <Form @submitted="submitForm" :stateIndicators="stateIndicators" :retreats="retreats" :supplierTypes="supplierTypes">
+                <Form @submitted="submitForm" :item="item" :stateIndicators="stateIndicators" :retreats="retreats" :supplierTypes="supplierTypes">
                     <template #actions>
                         <PrimaryButton>
                             Atualizar

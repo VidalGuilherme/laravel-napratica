@@ -7,9 +7,12 @@ use App\Enums\StateIndicators;
 use App\Enums\SupplierTypes;
 use App\Http\Requests\StoreSupplierRequest;
 use App\Http\Requests\UpdateSupplierRequest;
+use App\Http\Resources\SupplierResource;
 use App\Models\Supplier;
 use App\Services\SupplierService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Inertia\Inertia;
 use Inertia\Response as InertiaResponse;
 
@@ -62,7 +65,7 @@ class SupplierController extends Controller
 
         $item = $this->service->store($request->validated());
 
-        return redirect(route('admin.fornecedores.show', $item->id));
+        return redirect(route('admin.suppliers.show', $item->id))->with('success', 'Fornecedor criado com Sucesso!');
     }
 
     /**
@@ -72,8 +75,15 @@ class SupplierController extends Controller
     {
         $this->authorize('view', $supplier);        
 
+        $supplierTypes = SupplierTypes::getOptions();
+        $retreats = Retreats::getOptions();
+        $stateIndicators = StateIndicators::getOptions();
+
         return Inertia::render('Admin/Suppliers/Show', [
-            'item' => $supplier
+            'item' => $supplier,
+            'supplierTypes' => $supplierTypes,
+            'retreats' => $retreats,
+            'stateIndicators' => $stateIndicators,
         ]);
     }
 
@@ -89,6 +99,7 @@ class SupplierController extends Controller
         $stateIndicators = StateIndicators::getOptions();
 
         return Inertia::render('Admin/Suppliers/Edit', [
+            'item' => $supplier,
             'supplierTypes' => $supplierTypes,
             'retreats' => $retreats,
             'stateIndicators' => $stateIndicators,
@@ -104,7 +115,7 @@ class SupplierController extends Controller
 
         $supplier = $this->service->update($request->validated(), $supplier);
 
-        return redirect(route('admin.fornecedores.show', $supplier->id));
+        return redirect(route('admin.suppliers.show', $supplier->id));
     }
 
     /**
@@ -119,6 +130,7 @@ class SupplierController extends Controller
         $stateIndicators = StateIndicators::getOptions();
 
         return Inertia::render('Admin/Suppliers/Delete', [
+            'item' => $supplier,
             'supplierTypes' => $supplierTypes,
             'retreats' => $retreats,
             'stateIndicators' => $stateIndicators,
@@ -133,6 +145,25 @@ class SupplierController extends Controller
         $this->authorize('delete', $supplier);
         $this->service->destroy($supplier);
 
-        return redirect(route('admin.fornecedores.index'));
+        return redirect(route('admin.suppliers.index'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function json(Request $request) : AnonymousResourceCollection
+    {
+        $this->authorize('viewAny', Supplier::class);
+        
+        $page = $request->get('start', 1);
+        $length = $request->get('length', 100);
+
+        $request->page = $page;
+
+        $items = Supplier::paginate($length)->withQueryString();
+
+        $response = SupplierResource::collection($items);
+
+        return $response;
     }
 }
