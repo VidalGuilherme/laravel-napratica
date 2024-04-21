@@ -9,6 +9,8 @@ import FieldsCompany from './FieldsCompany.vue';
 import { ref, watch } from 'vue';
 import Accordeon from '@/Components/Accordeon.vue';
 import FieldsAddress from './FieldsAddress.vue';
+import FieldsMainContacts from './FieldsMainContacts.vue';
+import FieldsAdditionalContacts from './FieldsAdditionalContacts.vue';
 
 const props = defineProps({
     item: {
@@ -45,6 +47,25 @@ const props = defineProps({
             }
         ],
     },
+    contacts: {
+        default: [
+            {
+                id: '',
+                phones: [
+                    {
+                        phone_number: '',
+                        phone_type: ''
+                    }
+                ],
+                emails: [
+                    {
+                        email: '',
+                        email_type: ''
+                    }
+                ]
+            }
+        ]
+    },
     supplierTypes: {
         default: []
     },
@@ -60,6 +81,9 @@ const props = defineProps({
     cities: {
         default: []
     },
+    contactTypes: {
+        default: []
+    },
     isDisabled: {
         default: false
     },
@@ -69,7 +93,8 @@ defineEmits(['submitted']);
 
 const form = useForm({
     supplier: props.item,
-    addresses: props.addresses
+    addresses: props.addresses,
+    contacts: props.contacts,
 });
 
 const supplierType = ref(props.item.supplier_type);
@@ -109,7 +134,7 @@ const resetForm = (type) => {
         
         <template #form>
             
-            <Accordeon class="col-span-12" :title="'Dados do Fornecedor'" :id="'supplier_data'">
+            <Accordeon class="col-span-12" title="Dados do Fornecedor" :id="'supplier_data'">
                 <div class="grid grid-cols-12 gap-6 col-span-12">
                     <div class="col-span-12">                        
                         <div class="flex items-center">
@@ -155,17 +180,22 @@ const resetForm = (type) => {
                 </div>
             </Accordeon>
             
-            <Accordeon class="col-span-12" :title="'Dados de Endereço'" :id="'supplier_data'">
+            <Accordeon class="col-span-12" title="Contato Principal" :id="'supplier_data'">
+                <FieldsMainContacts :items="form.contacts" :contactTypes="contactTypes" :errors="form.errors" :isDisabled="isDisabled"></FieldsMainContacts>
+            </Accordeon>
+
+            <Accordeon class="col-span-12" title="Contatos Adicionais" :id="'supplier_data'">
+                <FieldsAdditionalContacts :items="form.contacts" :contactTypes="contactTypes" :errors="form.errors" :isDisabled="isDisabled"></FieldsAdditionalContacts>
+            </Accordeon>
+
+            <Accordeon class="col-span-12" title="Dados de Endereço" :id="'supplier_data'">
                 <FieldsAddress :items="form.addresses" :states="states" :cities="cities" :errors="form.errors" :isDisabled="isDisabled"></FieldsAddress>                
             </Accordeon>
 
-            <Accordeon class="col-span-12" :title="'Observação'" :id="'supplier_data'">
+            <Accordeon class="col-span-12" title="Observação" :id="'supplier_data'">
                 <div class="grid grid-cols-12 gap-6 col-span-12">
-                    <div class="col-span-12 lg:col-span-3">
-                        <InputLabel for="active">
-                            Ativo <span class="text-red-600">*</span>
-                        </InputLabel>
-                        
+                    <div class="col-span-12">
+
                         <InputError :message="form.errors?.active" class="mt-2" />
                     </div>
                 </div>
