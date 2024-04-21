@@ -27,7 +27,7 @@ Route::middleware([
         return Inertia::render('Dashboard');
     })->name('dashboard');
 
-    Route::resource('fornecedores', 'SupplierController');
-    Route::get('fornecedores/{id}/delete', 'SupplierController@delete')->name('fornecedores.delete');
-
+    Route::resource('suppliers', 'SupplierController');
+    Route::get('suppliers/{supplier}/delete', 'SupplierController@delete')->name('suppliers.delete');
+    Route::get('suppliers/json/datatable', 'SupplierController@json')->name('suppliers.json');
 });

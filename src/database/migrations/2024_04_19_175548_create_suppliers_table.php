@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('suppliers', function (Blueprint $table) {
             $table->id();
-            $table->enum('supplier_type', ['pf', 'pj'])->nullable();
+            $table->enum('supplier_type', ['pf', 'pj']);
             $table->string('cpf', 11)->nullable();
             $table->string('personal_name')->nullable();
             $table->string('nickname', 11)->nullable();
@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('municipal_registration')->nullable();
             $table->string('cnpj_status', 20)->nullable();
             $table->enum('retreat', ['recolher', 'retido'])->nullable();
-            $table->boolean('status');
+            $table->boolean('active');
             $table->timestamps();
         });
     }

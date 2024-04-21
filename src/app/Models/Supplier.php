@@ -15,6 +15,7 @@ class Supplier extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'supplier_type',
         'cpf',
         'personal_name',
         'nickname',
@@ -27,6 +28,6 @@ class Supplier extends Model
         'municipal_registration',
         'cnpj_status',
         'retreat',
-        'status'
+        'active'
     ];
 }
