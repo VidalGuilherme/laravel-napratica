@@ -7,6 +7,7 @@ import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
+import FlashMessages from '@/Components/FlashMessages.vue';
 
 defineProps({
     title: String,
@@ -53,7 +54,7 @@ const logout = () => {
                                 </NavLink>
                             </div>
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink :href="route('admin.fornecedores.index')" :active="route().current('admin.fornecedores.*')">
+                                <NavLink :href="route('admin.suppliers.index')" :active="route().current('admin.suppliers.*')">
                                     Fornecedores
                                 </NavLink>
                             </div>
@@ -287,6 +288,10 @@ const logout = () => {
 
             <!-- Page Content -->
             <main>
+                <div class="px-4 py-8 md:flex-1 md:p-12 md:overflow-y-auto" scroll-region>
+                    <FlashMessages></FlashMessages>
+                </div>
+
                 <slot />
             </main>
         </div>
