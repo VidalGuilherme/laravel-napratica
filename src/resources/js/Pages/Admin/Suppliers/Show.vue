@@ -16,6 +16,12 @@ const props = defineProps({
     retreats: {
         default: []
     },
+    states: {
+        default: []
+    },
+    cities: {
+        default: []
+    },
 });
 
 </script>
@@ -46,7 +52,7 @@ const props = defineProps({
                     </ButtonLink>
                 </div>
 
-                <Form :item="item" :stateIndicators="stateIndicators" :retreats="retreats" :supplierTypes="supplierTypes" :isDisabled="true">
+                <Form :item="item" :addresses="item.addresses" :stateIndicators="stateIndicators" :retreats="retreats" :supplierTypes="supplierTypes" :isDisabled="true" :states="states" :cities="cities">
                     <template #actions>
                         
                     </template>

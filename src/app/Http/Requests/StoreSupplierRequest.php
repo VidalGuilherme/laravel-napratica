@@ -51,6 +51,15 @@ class StoreSupplierRequest extends FormRequest
                 'nullable'
             ],
             'active' => ['required'],
+            'addresses' => ['required', 'array'],
+            'addresses.*.zipcode' => ['required', 'max:8'],
+            'addresses.*.street' => ['required', 'max:255'],
+            'addresses.*.number' => ['required', 'max:40'],
+            'addresses.*.complement' => ['nullable'],
+            'addresses.*.district' => ['required', 'max:60'],
+            'addresses.*.reference_point' => ['nullable'],
+            'addresses.*.city_id' => ['required', 'exists:cities,id'],
+            'addresses.*.condominium' => ['required'],
         ];
     }
 

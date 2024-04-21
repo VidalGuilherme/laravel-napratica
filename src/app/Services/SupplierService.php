@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Address;
 use App\Models\Supplier;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
@@ -17,8 +18,19 @@ class SupplierService
         $item = DB::transaction(function () use ($validated) {
 
             $item = new Supplier();
-            $item->fill($validated);
+            $item->fill(Arr::except($validated, ['addresses']));
             $item->save();
+
+            $addresses = [];
+            foreach($validated['addresses']  as $address){
+                $zipcode = preg_replace('/[^0-9]/', '', $address['zipcode']);                
+                $addresses[] = array_merge($address, [
+                    'supplier_id' => $item->id,
+                    'zipcode' => $zipcode
+                ]);
+            }
+
+            Address::upsert($addresses, uniqueBy: ['id']);
 
             return $item;
         });
@@ -35,6 +47,17 @@ class SupplierService
 
             $item->update($validated);
 
+            $addresses = [];
+            foreach($validated['addresses']  as $address){
+                $zipcode = preg_replace('/[^0-9]/', '', $address['zipcode']);                
+                $addresses[] = array_merge($address, [
+                    'supplier_id' => $item->id,
+                    'zipcode' => $zipcode
+                ]);
+            }
+
+            Address::upsert($addresses, uniqueBy: ['id']);
+
             return $item;
         });
 
@@ -47,6 +70,7 @@ class SupplierService
     public function destroy(Supplier $item)
     {
         DB::transaction(function () use ($item) {
+            $item->addresses()->delete();
             $item->delete();
         });
     }

@@ -74,7 +74,7 @@ const columns = [
 
                 <div class="bg-white dark:bg-gray-800 shadow-xl sm:rounded-lg p-4">
                     
-                    <DataTable :ajax="route('admin.suppliers.json')" :columns="columns" :options="options" class="display">
+                    <DataTable :ajax="route('admin.suppliers.json.datatable')" :columns="columns" :options="options" class="display">
                         <thead>
                             <tr>
                                 <th scope="col">Razão Social/Nome</th>

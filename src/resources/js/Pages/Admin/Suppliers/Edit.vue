@@ -18,6 +18,12 @@ const props = defineProps({
     retreats: {
         default: []
     },
+    states: {
+        default: []
+    },
+    cities: {
+        default: []
+    },
 });
 
 const formSub = ref(null);
@@ -61,7 +67,7 @@ const submitForm = (form) => {
                     </ButtonLink>
                 </div>
 
-                <Form @submitted="submitForm" :item="item" :stateIndicators="stateIndicators" :retreats="retreats" :supplierTypes="supplierTypes">
+                <Form @submitted="submitForm" :item="item" :addresses="item.addresses" :stateIndicators="stateIndicators" :retreats="retreats" :supplierTypes="supplierTypes" :states="states" :cities="cities">
                     <template #actions>
                         <PrimaryButton :disabled="formSub && formSub?.processing"  :class="{ 'opacity-10': formSub && formSub?.processing }">
                             Atualizar

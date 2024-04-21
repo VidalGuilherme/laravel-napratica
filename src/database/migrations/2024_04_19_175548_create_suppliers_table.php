@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('cnpj_status', 20)->nullable();
             $table->enum('retreat', ['recolher', 'retido'])->nullable();
             $table->boolean('active');
-            $table->text('note');
+            $table->text('note')->nullable();
             $table->timestamps();
         });
     }

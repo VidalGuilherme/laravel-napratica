@@ -8,6 +8,8 @@ use App\Enums\SupplierTypes;
 use App\Http\Requests\StoreSupplierRequest;
 use App\Http\Requests\UpdateSupplierRequest;
 use App\Http\Resources\SupplierResource;
+use App\Models\City;
+use App\Models\State;
 use App\Models\Supplier;
 use App\Services\SupplierService;
 use Illuminate\Http\JsonResponse;
@@ -48,11 +50,13 @@ class SupplierController extends Controller
         $supplierTypes = SupplierTypes::getOptions();
         $retreats = Retreats::getOptions();
         $stateIndicators = StateIndicators::getOptions();
+        $states = State::orderBy('uf', 'ASC')->get();
 
         return Inertia::render('Admin/Suppliers/Create', [
             'supplierTypes' => $supplierTypes,
             'retreats' => $retreats,
             'stateIndicators' => $stateIndicators,
+            'states' => $states,
         ]);
     }
 
@@ -78,12 +82,18 @@ class SupplierController extends Controller
         $supplierTypes = SupplierTypes::getOptions();
         $retreats = Retreats::getOptions();
         $stateIndicators = StateIndicators::getOptions();
+        $states = State::orderBy('uf', 'ASC')->get();
+
+        $supplier->load(['addresses']);
+        $cities = City::where('state_id', $supplier->addresses[0]->city->state_id)->get();
 
         return Inertia::render('Admin/Suppliers/Show', [
             'item' => $supplier,
             'supplierTypes' => $supplierTypes,
             'retreats' => $retreats,
             'stateIndicators' => $stateIndicators,
+            'states' => $states,
+            'cities' => $cities
         ]);
     }
 
@@ -97,12 +107,18 @@ class SupplierController extends Controller
         $supplierTypes = SupplierTypes::getOptions();
         $retreats = Retreats::getOptions();
         $stateIndicators = StateIndicators::getOptions();
+        $states = State::orderBy('uf', 'ASC')->get();        
+
+        $supplier->load(['addresses']);
+        $cities = City::where('state_id', $supplier->addresses[0]->city->state_id)->get();
 
         return Inertia::render('Admin/Suppliers/Edit', [
             'item' => $supplier,
             'supplierTypes' => $supplierTypes,
             'retreats' => $retreats,
             'stateIndicators' => $stateIndicators,
+            'states' => $states,
+            'cities' => $cities
         ]);
     }
 
@@ -128,12 +144,17 @@ class SupplierController extends Controller
         $supplierTypes = SupplierTypes::getOptions();
         $retreats = Retreats::getOptions();
         $stateIndicators = StateIndicators::getOptions();
+        $states = State::orderBy('uf', 'ASC')->get();
+        $supplier->load(['addresses']);
+        $cities = City::where('state_id', $supplier->addresses[0]->city->state_id)->get();
 
         return Inertia::render('Admin/Suppliers/Delete', [
             'item' => $supplier,
             'supplierTypes' => $supplierTypes,
             'retreats' => $retreats,
             'stateIndicators' => $stateIndicators,
+            'states' => $states,
+            'cities' => $cities
         ]);
     }
 
@@ -151,7 +172,7 @@ class SupplierController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function json(Request $request) : AnonymousResourceCollection
+    public function jsonDatatable(Request $request) : AnonymousResourceCollection
     {
         $this->authorize('viewAny', Supplier::class);
         
