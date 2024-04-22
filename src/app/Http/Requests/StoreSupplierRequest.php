@@ -57,7 +57,7 @@ class StoreSupplierRequest extends FormRequest
             'note' => ['nullable'],
 
             'addresses' => ['required', 'array'],
-            'addresses.*.zipcode' => ['required', 'max:8'],
+            'addresses.*.zipcode' => ['required', 'max:10'],
             'addresses.*.street' => ['required', 'max:255'],
             'addresses.*.number' => ['required', 'max:40'],
             'addresses.*.complement' => ['nullable'],

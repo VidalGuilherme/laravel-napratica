@@ -58,7 +58,7 @@ class UpdateSupplierRequest extends FormRequest
 
             'addresses' => ['required', 'array'],
             'addresses.*.id' => ['required', 'exists:addresses,id'],
-            'addresses.*.zipcode' => ['required', 'max:8'],
+            'addresses.*.zipcode' => ['required', 'max:10'],
             'addresses.*.street' => ['required', 'max:255'],
             'addresses.*.number' => ['required', 'max:40'],
             'addresses.*.complement' => ['nullable'],
@@ -89,5 +89,16 @@ class UpdateSupplierRequest extends FormRequest
                 'nullable'
             ],
         ];
+    }
+
+    /**
+     * Prepare the data for validation.
+     */
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'cpf' => preg_replace('/[^0-9]/', '', $this->cpf),
+            'cnpj' => preg_replace('/[^0-9]/', '', $this->cnpj),
+        ]);
     }
 }
