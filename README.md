@@ -62,6 +62,13 @@ $ docker exec laravel-napratica-phpfpm npm run build
 
 9. Visite o aplicativo em http://localhost:8383
 
+```bash
+Dados de acesso:
+	Email: test@email.com
+	Passsword: 12345678
+```
+
+
 ## Docker
 
 ```bash
@@ -73,3 +80,5 @@ $ docker exec -it laravel-napratica-phpfpm /bin/bash
 ```
 
 To install Docker locally you can [click here](https://www.docker.com/products/docker-desktop/).
+
+![Print](./laravel-napratica.png)
