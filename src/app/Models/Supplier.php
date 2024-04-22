@@ -29,7 +29,8 @@ class Supplier extends Model
         'municipal_registration',
         'cnpj_status',
         'retreat',
-        'active'
+        'active',
+        'note',
     ];
 
     public function addresses(): HasMany

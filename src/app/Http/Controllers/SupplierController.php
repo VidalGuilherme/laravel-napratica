@@ -17,6 +17,7 @@ use App\Services\SupplierService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Http;
 use Inertia\Inertia;
 use Inertia\Response as InertiaResponse;
 
@@ -205,5 +206,41 @@ class SupplierController extends Controller
         $response = SupplierResource::collection($items);
 
         return $response;
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function jsonCnpj(Request $request)
+    {
+        $this->authorize('viewAny', Supplier::class);
+        
+        $cnpj = $request->get('cnpj', null);
+
+        if($cnpj){
+            $cnpj = preg_replace('/[^0-9]/', '', $cnpj);
+            $response = Http::get("https://receitaws.com.br/v1/cnpj/$cnpj");
+            return $response->json();        
+        }
+
+        return response()->json([]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function jsonZipCode(Request $request)
+    {
+        $this->authorize('viewAny', Supplier::class);
+        
+        $zipcode = $request->get('zipcode', null);
+
+        if($zipcode){
+            $zipcode = preg_replace('/[^0-9]/', '', $zipcode);
+            $response = Http::get("https://viacep.com.br/ws/$zipcode/json");
+            return $response->json();        
+        }
+
+        return response()->json([]);
     }
 }

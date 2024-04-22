@@ -30,6 +30,8 @@ Route::middleware([
     Route::resource('suppliers', 'SupplierController');
     Route::get('suppliers/{supplier}/delete', 'SupplierController@delete')->name('suppliers.delete');
     Route::get('suppliers/json/datatable', 'SupplierController@jsonDatatable')->name('suppliers.json.datatable');
+    Route::get('suppliers/json/cnpj', 'SupplierController@jsonCnpj')->name('suppliers.json.cnpj');
+    Route::get('suppliers/json/zipcode', 'SupplierController@jsonZipCode')->name('suppliers.json.zipcode');
 
     Route::get('cities/json/list', 'CityController@jsonList')->name('cities.json.list');
 });

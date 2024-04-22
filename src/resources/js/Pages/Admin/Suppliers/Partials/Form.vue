@@ -116,6 +116,19 @@ const changeStateIndicator = (state_indicator) => {
     }
 };
 
+const changeCnpj = (data) => {
+    form.supplier.company_name = data.nome;
+    form.supplier.fantasy_name = data.fantasia;
+    form.supplier.cnpj_status = data.situacao;
+    form.addresses[0].zipcode = data.cep.replace(/[^0-9]/g, '');
+};
+
+const changeZipcode = (data) => {
+    form.addresses[0].street = data.logradouro;
+    form.addresses[0].district = data.bairro;
+    form.addresses[0].city_id = data.city_id;
+};
+
 const resetForm = (type) => {    
     form.supplier = {
         supplier_type: type,
@@ -166,7 +179,9 @@ const resetForm = (type) => {
                         :show="supplierType == 'pj'" 
                         :item="form.supplier" :stateIndicators="stateIndicators" :retreats="retreats" :errors="form.errors" 
                         :isDisabled="isDisabled"
-                        @changeStateIndicator="changeStateIndicator">
+                        @changeStateIndicator="changeStateIndicator"
+                        @changeCnpj="changeCnpj"
+                    >
                     </FieldsCompany>
 
                     <div class="col-span-12 lg:col-span-3">
@@ -197,7 +212,7 @@ const resetForm = (type) => {
             </Accordeon>
 
             <Accordeon class="col-span-12" title="Dados de Endereço" :id="'supplier_data'">
-                <FieldsAddress :items="form.addresses" :states="states" :cities="cities" :errors="form.errors" :isDisabled="isDisabled"></FieldsAddress>                
+                <FieldsAddress @changeZipcode="changeZipcode" :items="form.addresses" :states="states" :cities="cities" :errors="form.errors" :isDisabled="isDisabled"></FieldsAddress>                
             </Accordeon>
 
             <Accordeon class="col-span-12" title="Observação" :id="'supplier_data'">
@@ -208,8 +223,10 @@ const resetForm = (type) => {
                             id="exampleFormControlTextarea1"
                             v-model="form.supplier.note"
                             rows="6"
+                            :disabled="isDisabled"
                             placeholder="Your message"
                             class="peer block min-h-[auto] w-full rounded border-gray-400 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:peer-focus:text-primary [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
+                            :class="isDisabled ? 'disabled:opacity-75 dark:bg-gray-500 bg-gray-200' : ''"
                         ></textarea>
                         <InputError :message="form.errors?.note" class="mt-2" />
                     </div>

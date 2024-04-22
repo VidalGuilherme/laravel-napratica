@@ -37,6 +37,8 @@ const props = defineProps({
     },
 });
 
+const emit = defineEmits(['changeZipcode']);
+
 const stateSelected = ref({
     selected: props.items[0]?.city?.state_id,
     changing: false,
@@ -44,7 +46,6 @@ const stateSelected = ref({
 const cities = ref(props.cities);
 
 const changeState = async () => {
-
     if(!stateSelected.value) return;
     stateSelected.value.changing = true;
     try {
@@ -53,11 +54,32 @@ const changeState = async () => {
         });
         cities.value = response.data;
     } catch (error) {
-        console.error("Error fetching file preview log data:", error);
+        console.error("Error fetching cities list:", error);
     }
     stateSelected.value.changing = false;   
 }
 
+const changeZipcode = async () => {        
+    if(props.items[0].zipcode.length < 9) return;
+
+    const zipcode = props.items[0].zipcode.replace(/[^0-9]/g, '');    
+    try {
+        const { data } = await axios.get(route('admin.suppliers.json.zipcode'),  {
+            params: { zipcode: zipcode}
+        });        
+        if(data.cep){
+            const stat = props.states.filter((s) => s.uf == data.uf)[0];            
+            stateSelected.value.selected = stat.id;
+            await changeState();
+            const city = cities.value.filter((c) => c.name == data.localidade)[0];
+            if(city) data.city_id = city.id;
+            emit('changeZipcode', data);
+        }
+    } catch (error) {
+        console.error(error);
+    }
+
+};
 </script>
 
 <template>    
@@ -67,11 +89,12 @@ const changeState = async () => {
                 CEP <span class="text-red-600">*</span>
             </InputLabel>
             <MaskInput
-                :mask="'#####-##'" 
+                :mask="'#####-###'" 
                 id="zipcode"
                 v-model="item.zipcode"
                 class="block w-full mt-1"
                 :isDisabled="isDisabled"
+                @keyup="changeZipcode"
             />                
             <InputError :message="errors[`addresses.${index}.zipcode`]" class="mt-2" />
         </div>

@@ -54,6 +54,7 @@ class UpdateSupplierRequest extends FormRequest
                 'nullable'
             ],
             'active' => ['required'],
+            'note' => ['nullable'],
 
             'addresses' => ['required', 'array'],
             'addresses.*.id' => ['required', 'exists:addresses,id'],

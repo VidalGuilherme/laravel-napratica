@@ -36,11 +36,28 @@ const props = defineProps({
     },
 });
 
-defineEmits(['changeStateIndicator']);
+const emit = defineEmits(['changeStateIndicator', 'changeCnpj']);
 
 const checkStateIndicator = computed(() => {
     return props.item.state_indicator == '' || props.item.state_indicator == 'nao_contribuinte';
 });
+
+const changeCnpj = async () => {    
+    if(props.item.cnpj.length < 18) return;
+
+    const cnpj = props.item.cnpj.replace(/[^0-9]/g, '');    
+    try {
+        const { data } = await axios.get(route('admin.suppliers.json.cnpj'),  {
+            params: { cnpj: cnpj}
+        });
+        if(data.status == "OK"){
+            emit('changeCnpj', data);
+        }
+    } catch (error) {
+        console.error(error);
+    }
+
+};
 
 </script>
 
@@ -56,6 +73,7 @@ const checkStateIndicator = computed(() => {
             v-model="item.cnpj"
             class="block w-full mt-1"
             :isDisabled="isDisabled"
+            @keyup="changeCnpj"
         />                
         <InputError :message="errors?.cnpj" class="mt-2" />
     </div>

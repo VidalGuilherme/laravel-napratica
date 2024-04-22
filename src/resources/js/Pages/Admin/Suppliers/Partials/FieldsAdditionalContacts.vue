@@ -139,7 +139,7 @@ const checkLength = (toCheck) => {
         </div>
         <div v-if="index > 0" class="col-span-3">
             <InputLabel :for="'contact_office_'+index" class="">
-                Empresa
+                Cargo
             </InputLabel>
             <TextInput
                 :id="'contact_office_'+index"
