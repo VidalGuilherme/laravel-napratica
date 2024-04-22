@@ -17,7 +17,13 @@ class SupplierFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'supplier_type' => 'pf',
+            'cpf' => fake()->numerify('###########'),
+            'personal_name' => fake()->name(),
+            'nickname' => fake()->name(),
+            'rg' => fake()->numerify('########'),
+            'active' => true,
+            'note' => fake()->text(70),
         ];
     }
 }
