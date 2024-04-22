@@ -60,7 +60,7 @@ OU
 $ docker exec laravel-napratica-phpfpm npm run build
 ```
 
-9. Visite o aplicativo em http://localhost:8383
+9. Visite o aplicativo em http://localhost:8383 | http://localhost:8383/login
 
 ```bash
 Dados de acesso:
