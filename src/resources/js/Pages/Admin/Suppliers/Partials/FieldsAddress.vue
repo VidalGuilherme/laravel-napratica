@@ -44,7 +44,6 @@ const stateSelected = ref({
 const cities = ref(props.cities);
 
 const changeState = async () => {
-    console.log(props.errors);
 
     if(!stateSelected.value) return;
     stateSelected.value.changing = true;

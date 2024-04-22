@@ -110,7 +110,7 @@ const checkLength = (toCheck) => {
                 <div class="col-span-2 mr-1">
                     <button v-if="index > 0 && !isDisabled" @click="removePhone(n-1, index)" 
                         type="button" 
-                        class="mt-8 px-2 py-1 text-xs float-left font-medium bg-red-700 border border-gray-300 rounded-md font-bold text-white tracking-widest shadow-sm hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-800 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150">
+                        class="mt-8 px-2 py-1 text-xs float-left bg-red-700 border border-gray-300 rounded-md font-bold text-white tracking-widest shadow-sm hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-800 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150">
                         X
                     </button>
                 </div>
@@ -159,7 +159,7 @@ const checkLength = (toCheck) => {
                 <div class="col-span-2 mr-1">
                     <button v-if="index > 0 && !isDisabled" @click="removeEmail(n-1, index)" 
                         type="button" 
-                        class="mt-8 px-2 py-1 text-xs float-left font-medium bg-red-700 border border-gray-300 rounded-md font-bold text-white tracking-widest shadow-sm hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-800 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150">
+                        class="mt-8 px-2 py-1 text-xs float-left bg-red-700 border border-gray-300 rounded-md font-bold text-white tracking-widest shadow-sm hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-800 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150">
                         X
                     </button>
                 </div>

@@ -187,7 +187,7 @@ const checkLength = (toCheck) => {
                 <div class="col-span-2 mr-1">
                     <button v-if="p > 0 && !isDisabled" @click="removePhone(index, p)" 
                         type="button" 
-                        class="mt-8 px-2 py-1 text-xs float-left font-medium bg-red-700 border border-gray-300 rounded-md font-bold text-white tracking-widest shadow-sm hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-800 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150">
+                        class="mt-8 px-2 py-1 text-xs float-left bg-red-700 border border-gray-300 rounded-md font-bold text-white tracking-widest shadow-sm hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-800 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150">
                         X
                     </button>
                 </div>
@@ -236,7 +236,7 @@ const checkLength = (toCheck) => {
                 <div class="col-span-2 mr-1">
                     <button v-if="e > 0 && !isDisabled" @click="removeEmail(index, e)" 
                         type="button" 
-                        class="mt-8 px-2 py-1 text-xs float-left font-medium bg-red-700 border border-gray-300 rounded-md font-bold text-white tracking-widest shadow-sm hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-800 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150">
+                        class="mt-8 px-2 py-1 text-xs float-left bg-red-700 border border-gray-300 rounded-md font-bold text-white tracking-widest shadow-sm hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-800 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150">
                         X
                     </button>
                 </div>
@@ -253,7 +253,7 @@ const checkLength = (toCheck) => {
         <div v-if="index > 0" class="col-span-2">            
             <button v-if="!isDisabled" @click="removeContact(index)" 
                 type="button" 
-                class="mt-4 ml-2 px-2 py-2 text-xs font-medium bg-red-700 border border-gray-300 rounded-md font-bold text-white tracking-widest shadow-sm hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-800 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150">
+                class="mt-4 ml-2 px-2 py-2 text-xs font-medium bg-red-700 border border-gray-300 rounded-md text-white tracking-widest shadow-sm hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-800 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150">
                 Remover
             </button>
         </div>
