@@ -122,7 +122,7 @@ const checkLength = (toCheck) => {
                 class="block w-full mt-1"
                 :isDisabled="isDisabled"            
             />
-            <InputError :message="errors?.personal_name" class="mt-2" />
+            <InputError :message="errors[`contacts.${index}.name`]" class="mt-2" />
         </div>
         <div v-if="index > 0" class="col-span-3">
             <InputLabel :for="'contact_company_'+index" class="">
@@ -135,7 +135,7 @@ const checkLength = (toCheck) => {
                 class="block w-full mt-1"
                 :isDisabled="isDisabled"            
             />
-            <InputError :message="errors?.personal_name" class="mt-2" />
+            <InputError :message="errors[`contacts.${index}.company`]" class="mt-2" />
         </div>
         <div v-if="index > 0" class="col-span-3">
             <InputLabel :for="'contact_office_'+index" class="">
@@ -148,7 +148,7 @@ const checkLength = (toCheck) => {
                 class="block w-full mt-1"
                 :isDisabled="isDisabled"            
             />
-            <InputError :message="errors?.personal_name" class="mt-2" />
+            <InputError :message="errors[`contacts.${index}.office`]" class="mt-2" />
         </div>
         <div v-if="index > 0" class="col-span-12 lg:col-span-6">
             <InputLabel class="">
@@ -166,7 +166,7 @@ const checkLength = (toCheck) => {
                         class="block w-full mt-1"
                         :isDisabled="isDisabled"
                     />                
-                    <InputError :message="errors?.cnpj" class="mt-2" />
+                    <InputError :message="errors[`contacts.${index}.phones.${p}.phone_number`]" class="mt-2" />
                 </div>
 
                 <div class="col-span-5">
@@ -181,7 +181,8 @@ const checkLength = (toCheck) => {
                     >
                         <option value="">Selecione</option>            
                         <option v-for="(option, key) in phoneTypes" :key="key" :value="key">{{ option }}</option>        
-                    </SelectInput>        
+                    </SelectInput>     
+                    <InputError :message="errors[`contacts.${index}.phones.${p}.phone_type`]" class="mt-2" />   
                 </div>
                 <div class="col-span-2 mr-1">
                     <button v-if="p > 0 && !isDisabled" @click="removePhone(index, p)" 
@@ -214,7 +215,7 @@ const checkLength = (toCheck) => {
                         class="block w-full mt-1"
                         :isDisabled="isDisabled"
                     />
-                    <InputError :message="errors?.cnpj" class="mt-2" />
+                    <InputError :message="errors[`contacts.${index}.emails.${e}.email`]" class="mt-2" />
                 </div>
 
                 <div class="col-span-5">
@@ -229,7 +230,8 @@ const checkLength = (toCheck) => {
                     >
                         <option value="">Selecione</option>            
                         <option v-for="(option, key) in emailTypes" :key="key" :value="key">{{ option }}</option>        
-                    </SelectInput>        
+                    </SelectInput>   
+                    <InputError :message="errors[`contacts.${index}.emails.${e}.email_type`]" class="mt-2" />     
                 </div>
                 <div class="col-span-2 mr-1">
                     <button v-if="e > 0 && !isDisabled" @click="removeEmail(index, e)" 

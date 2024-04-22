@@ -29,6 +29,7 @@ const props = defineProps({
             cnpj_status: '',            
             retreat: '',
             active: '',
+            note: '',
         }
     },
     addresses: {
@@ -201,9 +202,16 @@ const resetForm = (type) => {
 
             <Accordeon class="col-span-12" title="Observação" :id="'supplier_data'">
                 <div class="grid grid-cols-12 gap-6 col-span-12">
-                    <div class="col-span-12">
-
-                        <InputError :message="form.errors?.active" class="mt-2" />
+                    <div class="col-span-12 p-1
+                    ">
+                        <textarea 
+                            id="exampleFormControlTextarea1"
+                            v-model="form.supplier.note"
+                            rows="6"
+                            placeholder="Your message"
+                            class="peer block min-h-[auto] w-full rounded border-gray-400 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[twe-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-white dark:placeholder:text-neutral-300 dark:peer-focus:text-primary [&:not([data-twe-input-placeholder-active])]:placeholder:opacity-0"
+                        ></textarea>
+                        <InputError :message="form.errors?.note" class="mt-2" />
                     </div>
                 </div>
             </Accordeon>

@@ -89,7 +89,7 @@ const checkLength = (toCheck) => {
                         class="block w-full mt-1"
                         :isDisabled="isDisabled"
                     />                
-                    <InputError :message="errors?.cnpj" class="mt-2" />
+                    <InputError :message="errors[`contacts.${n-1}.phones.${index}.phone_number`]" class="mt-2" />
                 </div>
 
                 <div class="col-span-5">
@@ -105,6 +105,7 @@ const checkLength = (toCheck) => {
                         <option value="">Selecione</option>            
                         <option v-for="(option, key) in phoneTypes" :key="key" :value="key">{{ option }}</option>        
                     </SelectInput>
+                    <InputError :message="errors[`contacts.${n-1}.phones.${index}.phone_type`]" class="mt-2" />
                 </div>
                 <div class="col-span-2 mr-1">
                     <button v-if="index > 0 && !isDisabled" @click="removePhone(n-1, index)" 
@@ -137,7 +138,7 @@ const checkLength = (toCheck) => {
                         class="block w-full mt-1"
                         :isDisabled="isDisabled"
                     />                
-                    <InputError :message="errors?.cnpj" class="mt-2" />
+                    <InputError :message="errors[`contacts.${n-1}.emails.${index}.email`]" class="mt-2" />
                 </div>
 
                 <div class="col-span-5">
@@ -152,7 +153,8 @@ const checkLength = (toCheck) => {
                     >
                         <option value="">Selecione</option>            
                         <option v-for="(option, key) in emailTypes" :key="key" :value="key">{{ option }}</option>        
-                    </SelectInput>        
+                    </SelectInput> 
+                    <InputError :message="errors[`contacts.${n-1}.emails.${index}.email_type`]" class="mt-2" />
                 </div>
                 <div class="col-span-2 mr-1">
                     <button v-if="index > 0 && !isDisabled" @click="removeEmail(n-1, index)" 

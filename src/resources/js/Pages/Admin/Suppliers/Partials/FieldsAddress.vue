@@ -44,6 +44,8 @@ const stateSelected = ref({
 const cities = ref(props.cities);
 
 const changeState = async () => {
+    console.log(props.errors);
+
     if(!stateSelected.value) return;
     stateSelected.value.changing = true;
     try {
@@ -62,17 +64,17 @@ const changeState = async () => {
 <template>    
     <div v-for="(item, index) in items" :key="index" class="grid grid-cols-12 gap-6 col-span-12">
         <div class="col-span-12 lg:col-span-3">
-            <InputLabel for="cnpj">
+            <InputLabel for="zipcode">
                 CEP <span class="text-red-600">*</span>
             </InputLabel>
-            <MaskInput required
+            <MaskInput
                 :mask="'#####-##'" 
                 id="zipcode"
                 v-model="item.zipcode"
                 class="block w-full mt-1"
                 :isDisabled="isDisabled"
             />                
-            <InputError :message="errors?.cnpj" class="mt-2" />
+            <InputError :message="errors[`addresses.${index}.zipcode`]" class="mt-2" />
         </div>
 
         <div class="col-span-12 lg:col-span-3">
@@ -86,7 +88,7 @@ const changeState = async () => {
                 class="block w-full mt-1"
                 :isDisabled="isDisabled"            
             />
-            <InputError :message="errors?.street" class="mt-2" />
+            <InputError :message="errors[`addresses.${index}.street`]" class="mt-2" />
         </div>
 
         <div class="col-span-12 lg:col-span-3">
@@ -99,7 +101,7 @@ const changeState = async () => {
                 class="block w-full mt-1"
                 :isDisabled="isDisabled"
             />                
-            <InputError :message="errors?.number" class="mt-2" />
+            <InputError :message="errors[`addresses.${index}.number`]" class="mt-2" />
         </div>
 
         <div class="col-span-12 lg:col-span-3">
@@ -112,7 +114,7 @@ const changeState = async () => {
                 class="block w-full mt-1"
                 :isDisabled="isDisabled"
             />
-            <InputError :message="errors?.complement" class="mt-2" />
+            <InputError :message="errors[`addresses.${index}.complement`]" class="mt-2" />
         </div>
 
         <div class="col-span-12 lg:col-span-3">
@@ -125,7 +127,7 @@ const changeState = async () => {
                 class="block w-full mt-1"
                 :isDisabled="isDisabled"
             />
-            <InputError :message="errors?.district" class="mt-2" />
+            <InputError :message="errors[`addresses.${index}.district`]" class="mt-2" />
         </div>
 
         <div class="col-span-12 lg:col-span-3">
@@ -138,7 +140,7 @@ const changeState = async () => {
                 class="block w-full mt-1"
                 :isDisabled="isDisabled"
             />
-            <InputError :message="errors?.reference_point" class="mt-2" />
+            <InputError :message="errors[`addresses.${index}.reference_point`]" class="mt-2" />
         </div>
 
         <div class="col-span-12 lg:col-span-3">
@@ -170,7 +172,7 @@ const changeState = async () => {
                 <option value="">Selecione</option>            
                 <option v-for="(city, index) in cities" :key="city.id" :value="city.id">{{ city.name }}</option>        
             </SelectInput>
-            <InputError :message="errors?.city_id" class="mt-2" />     
+            <InputError :message="errors[`addresses.${index}.city_id`]" class="mt-2" />     
         </div>
 
         <div class="col-span-12 lg:col-span-3">
@@ -187,7 +189,7 @@ const changeState = async () => {
                 <option :value="false">Não</option>
                 <option :value="true">Sim</option>
             </SelectInput>
-            <InputError :message="errors?.condominium" class="mt-2" />
+            <InputError :message="errors[`addresses.${index}.condominium`]" class="mt-2" />
         </div>
     </div>
 </template>
