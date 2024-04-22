@@ -16,8 +16,8 @@ return new class extends Migration
             $table->enum('supplier_type', ['pf', 'pj']);
             $table->string('cpf', 11)->nullable();
             $table->string('personal_name')->nullable();
-            $table->string('nickname', 11)->nullable();
-            $table->string('rg', 11)->nullable();            
+            $table->string('nickname')->nullable();
+            $table->string('rg')->nullable();            
             $table->string('cnpj', 14)->nullable();            
             $table->string('company_name')->nullable();
             $table->string('fantasy_name')->nullable();

@@ -51,6 +51,10 @@ const props = defineProps({
         default: [
             {
                 id: '',
+                order: 1,
+                name: '',
+                company: '',
+                office: '',
                 phones: [
                     {
                         phone_number: '',
@@ -81,7 +85,10 @@ const props = defineProps({
     cities: {
         default: []
     },
-    contactTypes: {
+    phoneTypes: {
+        default: []
+    },
+    emailTypes: {
         default: []
     },
     isDisabled: {
@@ -181,11 +188,11 @@ const resetForm = (type) => {
             </Accordeon>
             
             <Accordeon class="col-span-12" title="Contato Principal" :id="'supplier_data'">
-                <FieldsMainContacts :items="form.contacts" :contactTypes="contactTypes" :errors="form.errors" :isDisabled="isDisabled"></FieldsMainContacts>
+                <FieldsMainContacts :items="form.contacts" :phoneTypes="phoneTypes" :emailTypes="emailTypes" :errors="form.errors" :isDisabled="isDisabled"></FieldsMainContacts>
             </Accordeon>
 
             <Accordeon class="col-span-12" title="Contatos Adicionais" :id="'supplier_data'">
-                <FieldsAdditionalContacts :items="form.contacts" :contactTypes="contactTypes" :errors="form.errors" :isDisabled="isDisabled"></FieldsAdditionalContacts>
+                <FieldsAdditionalContacts :items="form.contacts" :phoneTypes="phoneTypes" :emailTypes="emailTypes" :errors="form.errors" :isDisabled="isDisabled"></FieldsAdditionalContacts>
             </Accordeon>
 
             <Accordeon class="col-span-12" title="Dados de Endereço" :id="'supplier_data'">

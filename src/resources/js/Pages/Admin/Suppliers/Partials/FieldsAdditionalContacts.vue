@@ -30,7 +30,10 @@ const props = defineProps({
             }
         ]
     },
-    contactTypes: {
+    phoneTypes: {
+        default: []
+    },
+    emailTypes: {
         default: []
     },    
     isDisabled: {
@@ -92,11 +95,14 @@ const removeEmail = (index, n) => {
     props.items[index].emails.splice(n, 1);
 };
 
+const checkLength = (toCheck) => {    
+    return toCheck.trim().length !== 0;
+}
 </script>
 
 <template>    
     <div>
-        <button @click="addContact()" 
+        <button v-if="!isDisabled" @click="addContact()" 
             type="button" 
             class="mt-1 mr-4 mb-4 ml-2 px-2 py-2 text-xs font-medium bg-white border border-gray-300 rounded-md  text-gray-700 tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-25 transition ease-in-out duration-150">
             Adicionar
@@ -151,9 +157,9 @@ const removeEmail = (index, n) => {
             <div v-for="(phone, p) in items[index].phones" :key="p" class="grid grid-cols-12 gap-6 col-span-12 mt-4">
                 <div class="col-span-5 ml-2">
                     <InputLabel :for="'phone_'+p">
-                        Telefone <span class="text-red-600">*</span>
+                        Telefone <span v-show="checkLength(phone.phone_number) || checkLength(phone.phone_type)" class="text-red-600">*</span>
                     </InputLabel>
-                    <MaskInput required
+                    <MaskInput :required="checkLength(phone.phone_number) || checkLength(phone.phone_type)"
                         :mask="'(##) #####-####'" 
                         :id="'phone_'+p"
                         v-model="phone.phone_number"
@@ -165,27 +171,27 @@ const removeEmail = (index, n) => {
 
                 <div class="col-span-5">
                     <InputLabel :for="'phone_type_'+p">
-                        Tipo <span class="text-red-600">*</span>
+                        Tipo <span v-show="checkLength(phone.phone_number) || checkLength(phone.phone_type)" class="text-red-600">*</span>
                     </InputLabel>
-                    <SelectInput 
+                    <SelectInput :required="checkLength(phone.phone_number) || checkLength(phone.phone_type)"
                         :id="'phone_type_'+p"
                         v-model="phone.phone_type"                    
                         class="block w-full mt-1"
                         :isDisabled="isDisabled"
                     >
                         <option value="">Selecione</option>            
-                        <option v-for="(option, key) in contactTypes" :key="key" :value="key">{{ option }}</option>        
+                        <option v-for="(option, key) in phoneTypes" :key="key" :value="key">{{ option }}</option>        
                     </SelectInput>        
                 </div>
                 <div class="col-span-2 mr-1">
-                    <button v-if="p > 0" @click="removePhone(index, p)" 
+                    <button v-if="p > 0 && !isDisabled" @click="removePhone(index, p)" 
                         type="button" 
                         class="mt-8 px-2 py-1 text-xs float-left font-medium bg-red-700 border border-gray-300 rounded-md font-bold text-white tracking-widest shadow-sm hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-800 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150">
                         X
                     </button>
                 </div>
             </div>
-            <button @click="addPhone(index)" 
+            <button v-if="!isDisabled" @click="addPhone(index)" 
                 type="button" 
                 class="mt-4 ml-2 px-2 py-2 text-xs font-medium bg-white border border-gray-300 rounded-md  text-gray-700 tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150">
                 Adicionar
@@ -199,51 +205,51 @@ const removeEmail = (index, n) => {
             <div v-for="(email, e) in items[index].emails" :key="e" class="grid grid-cols-12 gap-6 col-span-12 mt-4">
                 <div class="col-span-5 ml-2">
                     <InputLabel :for="'email_'+e">
-                        Email <span class="text-red-600">*</span>
+                        Email <span v-show="checkLength(email.email) || checkLength(email.email_type)" class="text-red-600">*</span>
                     </InputLabel>
-                    <MaskInput required
-                        :mask="'(##) #####-####'" 
-                        :id="'email_'+e"
+                    <TextInput :required="checkLength(email.email) || checkLength(email.email_type)"
+                        :id="'email_'+index"
+                        type="email"
                         v-model="email.email"
                         class="block w-full mt-1"
                         :isDisabled="isDisabled"
-                    />                
+                    />
                     <InputError :message="errors?.cnpj" class="mt-2" />
                 </div>
 
                 <div class="col-span-5">
                     <InputLabel :for="'email_type_'+e">
-                        Tipo <span class="text-red-600">*</span>
+                        Tipo <span v-show="checkLength(email.email) || checkLength(email.email_type)" class="text-red-600">*</span>
                     </InputLabel>
-                    <SelectInput 
+                    <SelectInput :required="checkLength(email.email) || checkLength(email.email_type)"
                         :id="'email_type_'+e"
                         v-model="email.email_type"                    
                         class="block w-full mt-1"
                         :isDisabled="isDisabled"
                     >
                         <option value="">Selecione</option>            
-                        <option v-for="(option, key) in contactTypes" :key="key" :value="key">{{ option }}</option>        
+                        <option v-for="(option, key) in emailTypes" :key="key" :value="key">{{ option }}</option>        
                     </SelectInput>        
                 </div>
                 <div class="col-span-2 mr-1">
-                    <button v-if="e > 0" @click="removeEmail(index, e)" 
+                    <button v-if="e > 0 && !isDisabled" @click="removeEmail(index, e)" 
                         type="button" 
                         class="mt-8 px-2 py-1 text-xs float-left font-medium bg-red-700 border border-gray-300 rounded-md font-bold text-white tracking-widest shadow-sm hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-800 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150">
                         X
                     </button>
                 </div>
             </div>
-            <button @click="addEmail(index)" 
+            <button v-if="!isDisabled" @click="addEmail(index)" 
                 type="button" 
                 class="mt-4 ml-2 px-2 py-2 text-xs font-medium bg-white border border-gray-300 rounded-md  text-gray-700 tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150">
                 Adicionar
             </button>
         </div>
-        <div v-if="index > 0" class="col-span-10">
+        <div v-if="index > 0" class="col-span-10" :class="{'col-span-12' : isDisabled}">
             <SectionBorder></SectionBorder>        
         </div>
         <div v-if="index > 0" class="col-span-2">            
-            <button @click="removeContact(index)" 
+            <button v-if="!isDisabled" @click="removeContact(index)" 
                 type="button" 
                 class="mt-4 ml-2 px-2 py-2 text-xs font-medium bg-red-700 border border-gray-300 rounded-md font-bold text-white tracking-widest shadow-sm hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-800 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150">
                 Remover

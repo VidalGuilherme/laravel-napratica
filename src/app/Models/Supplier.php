@@ -36,4 +36,9 @@ class Supplier extends Model
     {
         return $this->hasMany(Address::class, 'supplier_id');
     }
+
+    public function contacts(): HasMany
+    {
+        return $this->hasMany(Contact::class, 'supplier_id');
+    }
 }

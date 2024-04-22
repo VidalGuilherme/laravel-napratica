@@ -18,6 +18,12 @@ const props = defineProps({
     states: {
         default: []
     },
+    phoneTypes: {
+        default: []
+    },
+    emailTypes: {
+        default: []
+    },
 });
 
 const formSub = ref(null);
@@ -26,9 +32,10 @@ const submitForm = (form) => {
     formSub.value = form;
     form.transform((data) => ({
         ...data.supplier,
-        cpf: data.supplier.cpf.replace(/[^0-9]/g, ''),
-        cnpj: data.supplier.cnpj.replace(/[^0-9]/g, ''),
+        cpf: data.supplier.cpf ? data.supplier.cpf.replace(/[^0-9]/g, '') : '',
+        cnpj: data.supplier.cnpj ? data.supplier.cnpj.replace(/[^0-9]/g, '') : '',
         addresses: data.addresses,
+        contacts: data.contacts,
     })).post(route('admin.suppliers.store'), {
         errorBag: '',
         preserveScroll: true,
@@ -53,7 +60,7 @@ const submitForm = (form) => {
                     </ButtonLink>
                 </div>
 
-                <Form @submitted="submitForm" :stateIndicators="stateIndicators" :retreats="retreats" :supplierTypes="supplierTypes" :states="states" >
+                <Form @submitted="submitForm" :stateIndicators="stateIndicators" :retreats="retreats" :supplierTypes="supplierTypes" :states="states" :phoneTypes="phoneTypes" :emailTypes="emailTypes">
                     <template #actions>
                         <PrimaryButton :disabled="formSub && formSub?.processing"  :class="{ 'opacity-10': formSub && formSub?.processing }">
                             Cadastrar

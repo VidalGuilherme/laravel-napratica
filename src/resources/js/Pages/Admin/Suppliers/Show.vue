@@ -22,6 +22,12 @@ const props = defineProps({
     cities: {
         default: []
     },
+    phoneTypes: {
+        default: []
+    },
+    emailTypes: {
+        default: []
+    },
 });
 
 </script>
@@ -52,7 +58,7 @@ const props = defineProps({
                     </ButtonLink>
                 </div>
 
-                <Form :item="item" :addresses="item.addresses" :stateIndicators="stateIndicators" :retreats="retreats" :supplierTypes="supplierTypes" :isDisabled="true" :states="states" :cities="cities">
+                <Form :item="item" :addresses="item.addresses" :contacts="item.contacts" :stateIndicators="stateIndicators" :retreats="retreats" :supplierTypes="supplierTypes" :isDisabled="true" :states="states" :cities="cities" :phoneTypes="phoneTypes" :emailTypes="emailTypes">
                     <template #actions>
                         
                     </template>

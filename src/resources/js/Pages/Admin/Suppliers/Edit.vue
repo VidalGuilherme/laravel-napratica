@@ -24,6 +24,12 @@ const props = defineProps({
     cities: {
         default: []
     },
+    phoneTypes: {
+        default: []
+    },
+    emailTypes: {
+        default: []
+    },
 });
 
 const formSub = ref(null);
@@ -32,8 +38,10 @@ const submitForm = (form) => {
     formSub.value = form;
     form.transform((data) => ({
         ...data.supplier,
-        cpf: data.supplier.cpf.replace(/[^0-9]/g, ''),
-        cnpj: data.supplier.cnpj.replace(/[^0-9]/g, ''),
+        cpf: data.supplier.cpf ? data.supplier.cpf.replace(/[^0-9]/g, '') : '',
+        cnpj: data.supplier.cnpj ? data.supplier.cnpj.replace(/[^0-9]/g, '') : '',
+        addresses: data.addresses,
+        contacts: data.contacts,
     })).put(route('admin.suppliers.update', props.item), {
         errorBag: '',
         preserveScroll: true,
@@ -67,7 +75,7 @@ const submitForm = (form) => {
                     </ButtonLink>
                 </div>
 
-                <Form @submitted="submitForm" :item="item" :addresses="item.addresses" :stateIndicators="stateIndicators" :retreats="retreats" :supplierTypes="supplierTypes" :states="states" :cities="cities">
+                <Form @submitted="submitForm" :item="item" :addresses="item.addresses" :contacts="item.contacts" :stateIndicators="stateIndicators" :retreats="retreats" :supplierTypes="supplierTypes" :states="states" :cities="cities" :phoneTypes="phoneTypes" :emailTypes="emailTypes">
                     <template #actions>
                         <PrimaryButton :disabled="formSub && formSub?.processing"  :class="{ 'opacity-10': formSub && formSub?.processing }">
                             Atualizar

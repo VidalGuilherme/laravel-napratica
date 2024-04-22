@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\EmailTypes;
+use App\Enums\PhoneTypes;
 use App\Enums\Retreats;
 use App\Enums\StateIndicators;
 use App\Enums\SupplierTypes;
@@ -51,12 +53,16 @@ class SupplierController extends Controller
         $retreats = Retreats::getOptions();
         $stateIndicators = StateIndicators::getOptions();
         $states = State::orderBy('uf', 'ASC')->get();
+        $phoneTypes = PhoneTypes::getOptions();
+        $emailTypes = EmailTypes::getOptions();
 
         return Inertia::render('Admin/Suppliers/Create', [
             'supplierTypes' => $supplierTypes,
             'retreats' => $retreats,
             'stateIndicators' => $stateIndicators,
             'states' => $states,
+            'emailTypes' => $emailTypes,
+            'phoneTypes' => $phoneTypes
         ]);
     }
 
@@ -83,8 +89,10 @@ class SupplierController extends Controller
         $retreats = Retreats::getOptions();
         $stateIndicators = StateIndicators::getOptions();
         $states = State::orderBy('uf', 'ASC')->get();
+        $phoneTypes = PhoneTypes::getOptions();
+        $emailTypes = EmailTypes::getOptions();
 
-        $supplier->load(['addresses']);
+        $supplier->load(['addresses', 'contacts', 'contacts.phones', 'contacts.emails']);
         $cities = City::where('state_id', $supplier->addresses[0]->city->state_id)->get();
 
         return Inertia::render('Admin/Suppliers/Show', [
@@ -93,7 +101,9 @@ class SupplierController extends Controller
             'retreats' => $retreats,
             'stateIndicators' => $stateIndicators,
             'states' => $states,
-            'cities' => $cities
+            'cities' => $cities,
+            'emailTypes' => $emailTypes,
+            'phoneTypes' => $phoneTypes
         ]);
     }
 
@@ -108,8 +118,10 @@ class SupplierController extends Controller
         $retreats = Retreats::getOptions();
         $stateIndicators = StateIndicators::getOptions();
         $states = State::orderBy('uf', 'ASC')->get();        
+        $phoneTypes = PhoneTypes::getOptions();
+        $emailTypes = EmailTypes::getOptions();
 
-        $supplier->load(['addresses']);
+        $supplier->load(['addresses', 'contacts', 'contacts.phones', 'contacts.emails']);
         $cities = City::where('state_id', $supplier->addresses[0]->city->state_id)->get();
 
         return Inertia::render('Admin/Suppliers/Edit', [
@@ -118,7 +130,9 @@ class SupplierController extends Controller
             'retreats' => $retreats,
             'stateIndicators' => $stateIndicators,
             'states' => $states,
-            'cities' => $cities
+            'cities' => $cities,
+            'emailTypes' => $emailTypes,
+            'phoneTypes' => $phoneTypes
         ]);
     }
 
@@ -145,7 +159,10 @@ class SupplierController extends Controller
         $retreats = Retreats::getOptions();
         $stateIndicators = StateIndicators::getOptions();
         $states = State::orderBy('uf', 'ASC')->get();
-        $supplier->load(['addresses']);
+        $phoneTypes = PhoneTypes::getOptions();
+        $emailTypes = EmailTypes::getOptions();
+
+        $supplier->load(['addresses', 'contacts', 'contacts.phones', 'contacts.emails']);
         $cities = City::where('state_id', $supplier->addresses[0]->city->state_id)->get();
 
         return Inertia::render('Admin/Suppliers/Delete', [
@@ -154,7 +171,9 @@ class SupplierController extends Controller
             'retreats' => $retreats,
             'stateIndicators' => $stateIndicators,
             'states' => $states,
-            'cities' => $cities
+            'cities' => $cities,
+            'emailTypes' => $emailTypes,
+            'phoneTypes' => $phoneTypes
         ]);
     }
 
