@@ -46,19 +46,17 @@ class SupplierService
                 $newContact->save();
 
                 foreach($contact['emails'] as $email){
-                    if($email['email']){
-                        $emails[] = array_merge($email, [
-                            'contact_id' => $newContact->id,
-                        ]);
-                    }
+                    if(empty($email['email']) || empty($email['email_type'])) continue;
+                    $emails[] = array_merge($email, [
+                        'contact_id' => $newContact->id,
+                    ]);
                 }
 
                 foreach($contact['phones'] as $phone){
-                    if($phone['phone_number']){
-                        $phones[] = array_merge($phone, [
-                            'contact_id' => $newContact->id,
-                        ]);
-                    }
+                    if(empty($phone['phone_number']) || empty($phone['phone_type'])) continue;
+                    $phones[] = array_merge($phone, [
+                        'contact_id' => $newContact->id,
+                    ]);
                 }                
             }
 
@@ -115,6 +113,7 @@ class SupplierService
 
                 foreach($contact['emails'] as $email){
                     $emailData = array_merge($email, ['contact_id' => $newContact->id]);
+                    if(empty($emailData['email']) || empty($emailData['email_type'])) continue;
                     if(isset($email['id']) && $email['id']){
                         $emails[] = $emailData;
                         $emailsRemainingId[] = $email['id'];
@@ -125,6 +124,7 @@ class SupplierService
 
                 foreach($contact['phones'] as $phone){
                     $phoneData = array_merge($phone, ['contact_id' => $newContact->id]);
+                    if(empty($phoneData['phone_number']) || empty($phoneData['phone_type'])) continue;
                     if(isset($phone['id']) && $phone['id']){
                         $phones[] = $phoneData;
                         $phonesRemainingId[] = $phone['id'];
